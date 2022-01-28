@@ -1,0 +1,17 @@
+
+# Visual Studio Code
+.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# General
+
+*.7z
+
+js/jquery/
+node_modules/
+php/conn/
+web.config

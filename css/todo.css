@@ -1,0 +1,79 @@
+/**
+* set-apart.css
+*/
+
+@font-face {
+ font-family: cascadiaCode;
+ src: url(./font/CascadiaCode.woff2);
+}
+
+body {
+ background-color: #0000ff;
+ color: #ffffff;
+ font-family: cascadiaCode, Arial, Helvetica, sans-serif;
+ font-size: 16px;
+ margin-left: auto;
+ margin-right: auto;
+ width: 75%;
+}
+
+.button-1 {
+ background-image: linear-gradient(#0dccea, #0d70ea);
+ border: 0;
+ border-radius: 4px;
+ box-shadow: #0000004d 0 5px 15px;
+ box-sizing: border-box;
+ color: #fff;
+ cursor: pointer;
+ font-family: Montserrat, sans-serif;
+ font-size: 0.9em;
+ margin: 5px;
+ padding: 10px 15px;
+ text-align: center;
+ user-select: none;
+ -webkit-user-select: none;
+ touch-action: manipulation;
+}
+
+.button-2 {
+ background-image: linear-gradient(#0dccea, #0d70ea);
+ border: 0;
+ border-radius: 4px;
+ box-shadow: #0000004d 0 5px 15px;
+ box-sizing: border-box;
+ color: #fff;
+ cursor: pointer;
+ font-family: Montserrat, sans-serif;
+ font-size: 0.9em;
+ margin: 1px;
+ padding: 2px 4px;
+ text-align: center;
+ user-select: none;
+ -webkit-user-select: none;
+ touch-action: manipulation;
+}
+
+input {
+ border-radius: 5px;
+ font-size: 14px;
+ font-weight: bold;
+ padding: 2px;
+}
+
+table {
+ margin-left: auto;
+ margin-right: auto;
+ width: 80%;
+}
+
+.center {
+ text-align: center;
+}
+
+.right {
+ text-align: right;
+}
+
+.strikeThrough {
+ text-decoration: line-through;
+}

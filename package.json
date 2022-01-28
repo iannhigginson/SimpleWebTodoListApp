@@ -1,0 +1,22 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "test": "run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "Ian Neal Higginson",
+  "license": "MIT",
+  "dependencies": {
+    "google-closure-compiler": "^20220104.0.0",
+    "jshint": "^2.13.4"
+  }
+}
