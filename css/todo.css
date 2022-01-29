@@ -77,3 +77,22 @@ table {
 .strikeThrough {
  text-decoration: line-through;
 }
+
+/*
+.orangeText {
+ color: #ffa500;
+}
+*/
+
+.yellowText {
+ color: #ffff00;
+}
+
+.yellowTextBold {
+ color: #ffff00;
+ font-weight: 800;
+}
+
+.whiteText {
+ color: #ffffff;
+}

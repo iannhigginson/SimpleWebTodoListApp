@@ -3,7 +3,7 @@
  */
 
 $(() => {
- console.info(`Hello world from todo`);
+ //
  $.get("php/listItems.php", (r) => {
   let response = r.trim();
   console.log(response);
@@ -46,10 +46,23 @@ $(() => {
    td = document.createElement("td");
    label = document.createElement("label");
    label.innerText = item.note;
+   switch (item.priority) {
+    case "1":
+     label.classList.add("yellowTextBold");
+     break;
+    case "2":
+     label.classList.add("yellowText");
+     break;
+    default:
+     label.classList.add("whiteText");
+     break;
+   }
    if (item.done === "1") {
-    label.setAttribute("class", "strikeThrough");
+    label.classList.add("strikeThrough");
+    // label.setAttribute("class", "strikeThrough");
    } else {
-    label.setAttribute("class", "");
+    label.classList.remove("strikeThrough");
+    // label.setAttribute("class", "");
    }
    td.appendChild(label);
    tr.appendChild(td);
@@ -96,7 +109,9 @@ $(() => {
 });
 
 function addItem() {
- console.info("Adding item");
+ /**
+  *~ Variables
+  */
  var button, br, input, label, td, textarea, tr;
  let tbl = document.getElementById("priorityOne");
 
@@ -185,20 +200,33 @@ function addItem() {
  td.appendChild(button);
  tr.appendChild(td);
 
+ /**
+  *~ Insert at the top of the list.
+  */
  tbl.insertBefore(tr, tbl.childNodes[2]);
 
+ /**
+  *~ Place the cursor in the projects input field.
+  */
  document.getElementById("project").focus();
+
+ //
 }
 
 function checkboxChange(elem) {
- console.log(elem);
+ /**
+  *~ The checkbox is checked or unchecked.
+  */
  let id = elem.value;
  let thisParent = elem.parentNode.parentNode;
  let thisLabel = thisParent.querySelector("label");
- // thisLabel.forEach(() => {
- console.log(thisLabel.innerHTML);
+
  if (elem.checked === true) {
-  thisLabel.setAttribute("class", "strikeThrough");
+  /**
+   *~ The checkbox is checked
+   */
+  // thisLabel.setAttribute("class", "strikeThrough");
+  thisLabel.classList.add("strikeThrough");
   let postData = {
    id: id,
    done: true,
@@ -207,8 +235,14 @@ function checkboxChange(elem) {
    let response = r.trim();
    console.info(response);
   });
+
+  //
  } else {
-  thisLabel.setAttribute("class", "");
+  /**
+   *~ The checkbox is unchecked.
+   */
+  // thisLabel.setAttribute("class", "");
+  thisLabel.classList.remove("strikeThrough");
   let postData = {
    id: id,
    done: false,
@@ -217,88 +251,180 @@ function checkboxChange(elem) {
    let response = r.trim();
    console.info(response);
   });
+
+  //
  }
 }
 
 function editThis(elem) {
+ /**
+  ** Clear the console
+  */
  console.clear();
- console.info(elem);
- var br, button, buttons, input, label, textarea, td;
+
+ /**
+  *~ Variables
+  */
+ var br, button, buttons, id, input, label, priority, save, textarea, td;
+
+ /**
+  *~ Get the database row ID of this item.
+  */
  let checkbox = elem.parentNode.parentNode.querySelector(
   "input[type=checkbox]"
  );
+ id = checkbox.value;
 
- let id = checkbox.value;
-
- console.log(elem);
- console.log(id);
+ /**
+  *~ We are going to get this item from the database
+  *~ Make up a request object
+  */
  let postData = {
   rid: id,
  };
 
- console.log(postData);
+ /**
+  *~ Post off the request
+  */
  $.post("php/listItems.php", JSON.stringify(postData), (r) => {
+  /**
+   *~ Trim the reply
+   */
   let response = r.trim();
-  console.log(response);
-  let item = JSON.parse(response);
-  console.log(`item.note=> ${item[0].note}`);
-  let thisParent = elem.parentNode.parentNode;
-  buttons = thisParent.querySelectorAll("button");
-  let thisLabel = thisParent.querySelector("label");
-  td = thisLabel.parentNode;
-  td.innerHTML = "";
-  input = document.createElement("input");
-  input.id = "project";
-  input.type = "hidden";
-  input.value = item[0].project;
-  td.appendChild(input);
-  label = document.createElement("label");
-  label.innerText = "Note";
-  td.appendChild(label);
-  br = document.createElement("br");
-  td.appendChild(br);
-  textarea = document.createElement("textarea");
-  textarea.cols = "50";
-  textarea.rows = "1";
-  textarea.id = `note`;
-  textarea.size = "50";
-  textarea.innerText = item[0].note;
-  td.appendChild(textarea);
 
-  console.log(buttons.length);
-  let priority = buttons[0].parentNode;
-  priority.innerHTML = "";
-  label = document.createElement("label");
-  label.innerText = "priority";
-  priority.appendChild(label);
-  br = document.createElement("br");
-  priority.appendChild(br);
-  input = document.createElement("input");
-  input.id = `priority`;
-  input.size = "5";
-  input.type = "number";
-  input.value = item[0].priority;
-  priority.appendChild(input);
+  /**
+   *~ Make an object of the trimmed reply
+   */
+  let obj = JSON.parse(response);
 
-  let save = buttons[1].parentNode;
-  save.innerHTML = "";
-  button = document.createElement("button");
-  button.innerText = "Save";
-  button.setAttribute("class", "button-2");
-  button.setAttribute("onclick", `updateThis('${item[0].rid}')`);
-  save.appendChild(button);
+  /**
+   *~ Loop through the object
+   */
+  obj.forEach((item) => {
+   /**
+    *~ Get all the buttons on the page
+    */
+   buttons = elem.parentNode.parentNode.querySelectorAll("button");
 
+   /**
+    *~ Get the table cell that contains the content of the todo
+    *~ item and empty it.
+    */
+   td = elem.parentNode.parentNode.querySelector("label").parentNode;
+   td.innerHTML = "";
+
+   /**
+    *~ Create a hidden input to contain the project name
+    */
+   input = document.createElement("input");
+   input.id = "project";
+   input.type = "hidden";
+   input.value = item.project;
+   td.appendChild(input);
+
+   /**
+    *~ Create a label to indicate what this input is.
+    */
+   label = document.createElement("label");
+   label.innerText = "Note";
+   td.appendChild(label);
+
+   /**
+    *~ A new line
+    */
+   br = document.createElement("br");
+   td.appendChild(br);
+
+   /**
+    *~ A text area for the content of the todo item
+    */
+   textarea = document.createElement("textarea");
+   textarea.cols = "50";
+   textarea.rows = "1";
+   textarea.id = `note`;
+   textarea.size = "50";
+   textarea.title = `Press Ctrl End key to place the curson at the end if the content.`;
+   textarea.innerText = item.note;
+   td.appendChild(textarea);
+
+   /**
+    *~ Replace the first button with the todo's priority
+    *~ Empty the table cell
+    */
+   priority = buttons[0].parentNode;
+   priority.innerHTML = "";
+
+   /**
+    *~ Create a label to indicate what this input is
+    */
+   label = document.createElement("label");
+   label.innerText = "priority";
+   priority.appendChild(label);
+
+   /**
+    *~ New line
+    */
+   br = document.createElement("br");
+   priority.appendChild(br);
+
+   /**
+    *~ The input for the todo item's priority
+    */
+   input = document.createElement("input");
+   input.id = `priority`;
+   input.size = "5";
+   input.type = "number";
+   input.value = item.priority;
+   priority.appendChild(input);
+
+   /**
+    *~ Create a save button
+    *~ Empty the second button table cell of it's content.
+    */
+   save = buttons[1].parentNode;
+   save.innerHTML = "";
+
+   /**
+    *~ Create a save button.
+    */
+   button = document.createElement("button");
+   button.innerText = "Save";
+   button.setAttribute("class", "button-2");
+   button.setAttribute("onclick", `updateThis('${item.rid}')`);
+   save.appendChild(button);
+
+   //
+  });
+
+  /**
+   *~ Place the cursor in the text area
+   */
   document.getElementById("note").focus();
+
+  //
  });
 }
 
 function deleteThis(id) {
  console.info(id);
+
+ /**
+  *~ Get conformation of this action
+  */
  let x = confirm("Are you sure you want to delete this");
+
+ /**
+  *~ If the conformation is true.
+  *~ Make a request object of the ID.
+  */
  if (x === true) {
   let postData = {
    rid: id,
   };
+
+  /**
+   *~ Post off the request.
+   */
   $.post("php/deleteThis.php", JSON.stringify(postData), (r) => {
    let response = r.trim();
    console.info(response);
@@ -308,7 +434,9 @@ function deleteThis(id) {
 }
 
 function saveThis() {
- console.info(`Save this`);
+ /**
+  *~ This is from the create a new todo item
+  */
  let project = document.getElementById("project").value;
  let note = document.getElementById("note").value;
  let priority = document.getElementById("priority").value;
@@ -326,7 +454,9 @@ function saveThis() {
 }
 
 function updateThis(id) {
- console.info(`Update this`);
+ /**
+  *~ This is from the edit a todo item.
+  */
  let project = document.getElementById("project").value;
  let note = document.getElementById("note").value;
  let priority = document.getElementById("priority").value;
