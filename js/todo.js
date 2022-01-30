@@ -10,7 +10,7 @@ $(() => {
 
   var button, checkbox, label, td, tr;
 
-  let tbl = document.getElementById("priorityOne");
+  let tbl = document.getElementById("todoTbl");
   let obj = JSON.parse(response);
 
   obj.forEach((item) => {
@@ -59,10 +59,8 @@ $(() => {
    }
    if (item.done === "1") {
     label.classList.add("strikeThrough");
-    // label.setAttribute("class", "strikeThrough");
    } else {
     label.classList.remove("strikeThrough");
-    // label.setAttribute("class", "");
    }
    td.appendChild(label);
    tr.appendChild(td);
@@ -113,7 +111,7 @@ function addItem() {
   *~ Variables
   */
  var button, br, input, label, td, textarea, tr;
- let tbl = document.getElementById("priorityOne");
+ let tbl = document.getElementById("todoTbl");
 
  tr = document.createElement("tr");
 
@@ -217,6 +215,7 @@ function checkboxChange(elem) {
  /**
   *~ The checkbox is checked or unchecked.
   */
+ var postData;
  let id = elem.value;
  let thisParent = elem.parentNode.parentNode;
  let thisLabel = thisParent.querySelector("label");
@@ -225,35 +224,36 @@ function checkboxChange(elem) {
   /**
    *~ The checkbox is checked
    */
-  // thisLabel.setAttribute("class", "strikeThrough");
   thisLabel.classList.add("strikeThrough");
-  let postData = {
+  postData = {
    id: id,
    done: true,
   };
-  $.post("php/taskDone.php", JSON.stringify(postData), (r) => {
-   let response = r.trim();
-   console.info(response);
-  });
 
   //
  } else {
   /**
    *~ The checkbox is unchecked.
    */
-  // thisLabel.setAttribute("class", "");
   thisLabel.classList.remove("strikeThrough");
-  let postData = {
+  postData = {
    id: id,
    done: false,
   };
-  $.post("php/taskDone.php", JSON.stringify(postData), (r) => {
-   let response = r.trim();
-   console.info(response);
-  });
 
   //
  }
+
+ /**
+  *~ Record the done state, checkbox checked it's done
+  *~ checkbox unchecked it's not done.
+  */
+ $.post("php/taskDone.php", JSON.stringify(postData), (r) => {
+  let response = r.trim();
+  console.info(response);
+ });
+
+ //
 }
 
 function editThis(elem) {
