@@ -12,7 +12,7 @@ $out = "[";
 if ($rid !== "") {
  $sql = "SELECT * FROM `items` WHERE `rid` = $rid";
 } else {
- $sql = "SELECT * FROM `items` ORDER BY `project` ASC, `priority` ASC, `rid` DESC;";
+ $sql = "SELECT * FROM `items` ORDER BY `done` ASC, `project` ASC, `priority` ASC, `rid` DESC;";
 }
 $result = mysqli_query($conn, $sql);
 while ($row = mysqli_fetch_assoc($result)) {

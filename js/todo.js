@@ -2,9 +2,9 @@
  * @package todo.js
  */
 
-$(() => {
+_.ready(() => {
  //
- $.get("php/listItems.php", (r) => {
+ _.get("php/listItems.php", (r) => {
   let response = r.trim();
   console.log(response);
 
@@ -57,11 +57,13 @@ $(() => {
      label.classList.add("whiteText");
      break;
    }
+
    if (item.done === "1") {
     label.classList.add("strikeThrough");
    } else {
     label.classList.remove("strikeThrough");
    }
+
    td.appendChild(label);
    tr.appendChild(td);
 
@@ -248,7 +250,7 @@ function checkboxChange(elem) {
   *~ Record the done state, checkbox checked it's done
   *~ checkbox unchecked it's not done.
   */
- $.post("php/taskDone.php", JSON.stringify(postData), (r) => {
+ _.post("php/taskDone.php", JSON.stringify(postData), (r) => {
   let response = r.trim();
   console.info(response);
  });
@@ -286,7 +288,7 @@ function editThis(elem) {
  /**
   *~ Post off the request
   */
- $.post("php/listItems.php", JSON.stringify(postData), (r) => {
+ _.post("php/listItems.php", JSON.stringify(postData), (r) => {
   /**
    *~ Trim the reply
    */
@@ -425,7 +427,7 @@ function deleteThis(id) {
   /**
    *~ Post off the request.
    */
-  $.post("php/deleteThis.php", JSON.stringify(postData), (r) => {
+  _.post("php/deleteThis.php", JSON.stringify(postData), (r) => {
    let response = r.trim();
    console.info(response);
    document.location.href = "/";
@@ -446,7 +448,7 @@ function saveThis() {
   priority: priority,
   done: 0,
  };
- $.post("php/saveThis.php", JSON.stringify(postData), (r) => {
+ _.post("php/saveThis.php", JSON.stringify(postData), (r) => {
   let response = r.trim();
   console.log(response);
   document.location.href = "/";
@@ -467,7 +469,7 @@ function updateThis(id) {
   priority: priority,
   done: 0,
  };
- $.post("php/updateThis.php", JSON.stringify(postData), (r) => {
+ _.post("php/updateThis.php", JSON.stringify(postData), (r) => {
   let response = r.trim();
   console.log(response);
   document.location.href = "/";
