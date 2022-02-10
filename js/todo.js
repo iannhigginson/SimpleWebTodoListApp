@@ -253,6 +253,7 @@ function checkboxChange(elem) {
  _.post("php/taskDone.php", JSON.stringify(postData), (r) => {
   let response = r.trim();
   console.info(response);
+  document.location.href = "/";
  });
 
  //
