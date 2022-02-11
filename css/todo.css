@@ -25,14 +25,19 @@ body {
  box-sizing: border-box;
  color: #fff;
  cursor: pointer;
- font-family: Montserrat, sans-serif;
+ font-family: cascadiaCode, Arial, Helvetica, sans-serif;
  font-size: 0.9em;
  margin: 5px;
  padding: 10px 15px;
  text-align: center;
- user-select: none;
+ -ms-user-select: none;
  -webkit-user-select: none;
+ user-select: none;
  touch-action: manipulation;
+}
+
+.button-1:hover {
+ color: #ffff00;
 }
 
 .button-2 {
@@ -43,14 +48,19 @@ body {
  box-sizing: border-box;
  color: #fff;
  cursor: pointer;
- font-family: Montserrat, sans-serif;
+ font-family: cascadiaCode, Arial, Helvetica, sans-serif;
  font-size: 0.9em;
  margin: 1px;
  padding: 2px 4px;
  text-align: center;
- user-select: none;
+ -ms-user-select: none;
  -webkit-user-select: none;
+ user-select: none;
  touch-action: manipulation;
+}
+
+.button-2:hover {
+ color: #ffff00;
 }
 
 input {
@@ -61,9 +71,15 @@ input {
 }
 
 table {
+ border-collapse: collapse;
  margin-left: auto;
  margin-right: auto;
- width: 80%;
+ width: 100%;
+}
+
+td {
+ border-bottom: #f0f0f0 solid thin;
+ vertical-align: top;
 }
 
 .center {

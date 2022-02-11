@@ -33,6 +33,26 @@ _.ready(() => {
    td.appendChild(checkbox);
    tr.appendChild(td);
 
+   /*****************************************************************************/
+
+   /**
+    *! A spacer
+    */
+   td = document.createElement("td");
+   td.innerHTML = "&nbsp;";
+   tr.appendChild(td);
+
+   /**
+    *! The project
+    */
+   td = document.createElement("td");
+   td.setAttribute("nowrap", "nowrap");
+   label = document.createElement("label");
+   label.innerText = item.project;
+   td.appendChild(label);
+   tr.appendChild(td);
+   /*****************************************************************************/
+
    /**
     *! A spacer
     */
