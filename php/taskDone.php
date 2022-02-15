@@ -16,7 +16,7 @@ if ($n['done'] === false) {
  $done = 1;
 }
 
-$sql = "UPDATE `items` SET `done` = '$done' WHERE `rid` = $rid";
+$sql = "UPDATE `tasks` SET `done` = '$done' WHERE `rid` = $rid";
 
 // execute
 $result = mysqli_query($conn, $sql);

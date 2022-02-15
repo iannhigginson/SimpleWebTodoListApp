@@ -17,6 +17,12 @@ body {
  width: 75%;
 }
 
+.a25 {
+ border-bottom: none;
+ vertical-align: top;
+ width: 25%;
+}
+
 .button-1 {
  background-image: linear-gradient(#0dccea, #0d70ea);
  border: 0;
@@ -61,6 +67,37 @@ body {
 
 .button-2:hover {
  color: #ffff00;
+}
+
+.card {
+ background-color: #00005f;
+ border-radius: 0.5em;
+ box-shadow: 2px 2px 5px #56c6f6;
+ /* font-size: 12px; */
+ min-height: 60px;
+ overflow: auto;
+ padding: 15px;
+}
+
+.card-header {
+ border-bottom: #b9b6b6 solid thin;
+ color: #fff;
+ font-size: 2em;
+ font-weight: 900;
+ line-height: 2em;
+ text-align: center;
+}
+
+.card-title {
+ color: #fff;
+ font-size: 1.5em;
+ padding: 10px;
+}
+
+.card-block {
+ color: #fff;
+ font-size: 1em;
+ margin-left: 5em !important;
 }
 
 input {

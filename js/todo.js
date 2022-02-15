@@ -4,9 +4,8 @@
 
 _.ready(() => {
  //
- _.get("php/listItems.php", (r) => {
+ _.get("php/listTasks.php", (r) => {
   let response = r.trim();
-  console.log(response);
 
   var button, checkbox, label, td, tr;
 
@@ -138,6 +137,20 @@ function addItem() {
  tr = document.createElement("tr");
 
  /**
+  *! A spacer
+  */
+ td = document.createElement("td");
+ td.innerHTML = "&nbsp;";
+ tr.appendChild(td);
+
+ /**
+  *! A spacer
+  */
+ td = document.createElement("td");
+ td.innerHTML = "&nbsp;";
+ tr.appendChild(td);
+
+ /**
   *! The label and input for project
   */
  td = document.createElement("td");
@@ -240,13 +253,16 @@ function checkboxChange(elem) {
  var postData;
  let id = elem.value;
  let thisParent = elem.parentNode.parentNode;
- let thisLabel = thisParent.querySelector("label");
+ let thisLabel = thisParent.querySelectorAll("label");
 
  if (elem.checked === true) {
   /**
    *~ The checkbox is checked
    */
-  thisLabel.classList.add("strikeThrough");
+  thisLabel.forEach((label) => {
+   label.classList.add("strikeThrough");
+  });
+
   postData = {
    id: id,
    done: true,
@@ -257,7 +273,10 @@ function checkboxChange(elem) {
   /**
    *~ The checkbox is unchecked.
    */
-  thisLabel.classList.remove("strikeThrough");
+  thisLabel.forEach((label) => {
+   label.classList.remove("strikeThrough");
+  });
+
   postData = {
    id: id,
    done: false,
@@ -309,7 +328,7 @@ function editThis(elem) {
  /**
   *~ Post off the request
   */
- _.post("php/listItems.php", JSON.stringify(postData), (r) => {
+ _.post("php/listTasks.php", JSON.stringify(postData), (r) => {
   /**
    *~ Trim the reply
    */
@@ -333,7 +352,8 @@ function editThis(elem) {
     *~ Get the table cell that contains the content of the todo
     *~ item and empty it.
     */
-   td = elem.parentNode.parentNode.querySelector("label").parentNode;
+   tds = elem.parentNode.parentNode.querySelectorAll("label");
+   td = tds[1].parentNode;
    td.innerHTML = "";
 
    /**
@@ -495,4 +515,31 @@ function updateThis(id) {
   console.log(response);
   document.location.href = "/";
  });
+}
+
+/**
+ ** Document cookies
+ */
+
+function sc(name, value, days) {
+ var expires = "";
+ if (days) {
+  var date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  expires = `expires=${date.toUTCString()}`;
+ }
+ document.cookie = `${name}=${value}; ${expires}; path=/`;
+
+ console.info(document.cookie);
+}
+
+function gc(cname) {
+ var name = cname + "=";
+ var ca = document.cookie.split(";");
+ for (var i = 0; i < ca.length; i++) {
+  var c = ca[i];
+  while (c.charAt(0) === " ") c = c.substring(1);
+  if (c.indexOf(name) !== -1) return c.substring(name.length, c.length);
+ }
+ return "";
 }

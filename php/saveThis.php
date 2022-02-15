@@ -6,7 +6,7 @@ date_default_timezone_set("Africa/Johannesburg");
 require 'conn/connection.php';
 $n = json_decode(file_get_contents("php://input"), true);
 $last_id = "";
-$fsql = "INSERT INTO `items` (";
+$fsql = "INSERT INTO `tasks` (";
 $lsql = " VALUES (";
 foreach ($n as $key => $value) {
  switch ($key) {
